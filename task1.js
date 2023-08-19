@@ -2,7 +2,30 @@
 
 class NotesStore { 
     //add your code here
-    
+    constructor() {
+        this.notes = [];
+    }
+
+    addNote(state, name) {
+        if (name === '') {
+            throw new Error('Name cannot be empty');
+        }
+
+        if (state !== 'completed' && state !== 'active' && state !== 'others') {
+            throw new Error(`Invalid state ${state}`);
+        }
+
+        this.notes.push({ state, name });
+    }
+
+    getNotes(state) {
+        if (state !== 'completed' && state !== 'active' && state !== 'others') {
+            throw new Error(`Invalid state ${state}`);
+        }
+
+        const filteredNotes = this.notes.filter(note => note.state === state);
+        return filteredNotes.map(note => note.name);
+    }
 }
 
 function main() { const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
